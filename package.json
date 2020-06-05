@@ -1,0 +1,13 @@
+{
+  "name": "sofie-in-cypress",
+  "version": "0.0.0-develop",
+  "description": "Spike to test Sofie with Cypress",
+  "main": "index.js",
+  "repository": "https://github.com/sparkpunkd/sofie-in-cypress.git",
+  "author": "Richard Cartwright <spark@streampunk.media>",
+  "license": "MIT",
+  "private": false,
+  "devDependencies": {
+    "cypress": "^4.7.0"
+  }
+}
