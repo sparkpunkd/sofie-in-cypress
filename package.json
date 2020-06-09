@@ -10,5 +10,8 @@
   "devDependencies": {
     "cypress": "^4.7.0",
     "typescript": "^3.9.5"
+  },
+  "dependencies": {
+    "mongodb": "^3.5.8"
   }
 }
