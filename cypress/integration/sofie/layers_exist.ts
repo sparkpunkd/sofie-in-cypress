@@ -1,6 +1,6 @@
 describe('Test rundown', () => {
   beforeEach(() => {
-    cy.visit('/rundown/G6xVUpdg91LOM2Hx2Dv4NpJFuaw_') 
+    cy.visit('/rundown/_YJJzXOzWeHeepFTxTs8GGSk6Xw_?studio=1') 
   })
   const layers: Array<{ name: string, label: string}> = [
     { name: 'graphics_tag_left', label: 'Arkiv' },
@@ -25,6 +25,29 @@ describe('Test rundown', () => {
       .should('be.visible')
       .should('have.text', layer.label)        
     })
-
+  })
+  it('receives hotkeys', () => {
+    cy.waitUntil(() => cy.get('.header.rundown').should('be.visible'), {
+      timeout: 10000
+    })
+    cy.get('body').type('{ctrl}\\')
+    cy.wait(3000, { timeout: 4000 })
+    cy.get('.header.rundown')
+      .should('have.class', 'active')
+    cy.get('body').type('{ctrl}{shift}\\')
+    cy.wait(3000, { timeout: 4000 })
+    cy.get('.header.rundown')
+      .should('have.class', 'not-active')
+    cy.getCurrentTime().then((currentTime) => {
+      Cypress.log({
+        name: 'getCurrentTime',
+        displayName: 'S-TIME',
+        message: [`Current time is: ${currentTime}`],
+      })
+    })
+    cy.screenshot({
+      capture: 'runner'
+    })
+    cy.wait(3000, { timeout: 4000 })
   })
 })
