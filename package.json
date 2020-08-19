@@ -8,8 +8,10 @@
   "license": "MIT",
   "private": false,
   "devDependencies": {
-    "cypress": "^4.7.0",
+    "@types/node": "^12.12.54",
+    "cypress": "4.12.1",
     "cypress-wait-until": "^1.7.1",
+    "ts-node": "^8.10.2",
     "typescript": "^3.9.5"
   },
   "dependencies": {
