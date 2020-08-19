@@ -23,3 +23,9 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
+
+import 'cypress-wait-until'
+
+Cypress.Commands.add("getCurrentTime", () => cy.window().then((win) => {
+	return win.getCurrentTime()
+}))
