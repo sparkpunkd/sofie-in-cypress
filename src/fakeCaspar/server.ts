@@ -1,24 +1,5 @@
-/*
-  Phaneron - Clustered, accelerated and cloud-fit video server, pre-assembled and in kit form.
-  Copyright (C) 2020 Streampunk Media Ltd.
-
-  This program is free software: you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
-  the Free Software Foundation, either version 3 of the License, or
-  (at your option) any later version.
-
-  This program is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU General Public License for more details.
-
-  You should have received a copy of the GNU General Public License
-  along with this program.  If not, see <https://www.gnu.org/licenses/>.
-  https://www.streampunk.media/ mailto:furnace@streampunk.media
-  14 Ormiscaig, Aultbea, Achnasheen, IV22 2JJ  U.K.
-*/
-
 import * as net from 'net'
+import * as dgram from 'dgram'
 import { Responses, responses207, responses218, responses220 } from './cmdResponses'
 import { Commands } from './commands'
 
@@ -97,6 +78,8 @@ server.on('error', (err) => {
 	throw err
 })
 
+const dgramSocket = dgram.createSocket('udp4')
+
 export async function start(commands?: Commands): Promise<string> {
 	if (commands) cmds = commands
 
@@ -138,14 +121,14 @@ server.on('connection', (sock) => {
 
 		while (eol > -1) {
 			const command = chunk.substring(0, eol)
-			console.log(command)
+			dgramSocket.send(command, 52500, '127.0.0.1')
 			const result = processCommand(command.match(/"[^"]+"|""|\S+/g))
 			if (result === '***BYE***') {
 				sock.destroy()
 				break
 			}
 			sock.write(result.toString() + '\r\n')
-			console.log(result)
+			dgramSocket.send(result, 52500, '127.0.0.1')
 			if (result === '202 KILL OK') {
 				sock.destroy()
 				stop().catch(console.error)
@@ -173,6 +156,4 @@ export function version(version: string): void {
 	}
 }
 
-if (!module.parent) {
-	start().then(console.log, console.error)
-}
+
