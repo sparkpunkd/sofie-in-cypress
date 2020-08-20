@@ -1,12 +1,17 @@
 import { spawn } from 'child_process'
 import * as dgram from 'dgram'
+import { platform } from 'os'
+import { sep } from 'path'
 
 const dgramSocket = dgram.createSocket('udp4')
 
+const folder = platform() === 'linux' ? 'dist-linux' : 'dist-win'
+const executable = platform() === 'linux' ? 'AtemMock' : 'AtemMock.exe'
+
 let mockAtem = spawn(
-    __dirname + '\\fakeAtem\\dist-win\\AtemMock.exe', 
+    __dirname + `${sep}fakeAtem${sep}${folder}${sep}${executable}`, 
     [ '2me-v8.1.data' ], 
-    { shell: true, cwd: __dirname + '\\fakeAtem' })
+    { shell: true, cwd: __dirname + sep + 'fakeAtem' })
 
 mockAtem.stdout.on('data', d => {
     let ds = d.toString()
