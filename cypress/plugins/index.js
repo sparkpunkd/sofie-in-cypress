@@ -1,6 +1,6 @@
 const dgram = require('dgram')
 
-const casparSocket = dgram.createSocket({ type: 'udp4', reuseAddr: true }) //.bind(52500)
+const casparSocket = dgram.createSocket({ type: 'udp4', reuseAddr: true }).bind(52500)
 const atemSocket = dgram.createSocket({ type: 'udp4', reuseAddr: true }).bind(52502);
 
 module.exports = (on, config) => {
