@@ -1,6 +1,6 @@
 describe('Test rundown', () => {
   beforeEach(() => {
-    cy.visit('/rundown/_YJJzXOzWeHeepFTxTs8GGSk6Xw_?studio=1') 
+    cy.visit(`${Cypress.env('host')}/rundown/${Cypress.env('ro_id')}?studio=1`) 
   })
   const layers: Array<{ name: string, label: string}> = [
     { name: 'graphics_tag_left', label: 'Arkiv' },
