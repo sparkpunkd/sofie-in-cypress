@@ -25,6 +25,7 @@
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
 
 import 'cypress-wait-until'
+import addContext from 'mochawesome/addContext'
 
 Cypress.Commands.add("getCurrentTime", () => cy.window().then((win) => {
 	return win.getCurrentTime()
@@ -81,3 +82,8 @@ Cypress.Commands.add("dialogAccept", () => {
 		message: [ `Open Modal Dialog accepted` ]
 	})
 })
+
+Cypress.Commands.add("addContext", (context) => {
+  cy.once("test:after:run", (test) => addContext({ test }, context))
+})
+
