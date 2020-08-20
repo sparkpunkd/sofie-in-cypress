@@ -9,7 +9,6 @@
   "private": false,
   "devDependencies": {
     "cypress": "^4.7.0",
-    "cypress-select-tests": "^1.5.7",
     "cypress-wait-until": "^1.7.1",
     "typescript": "^3.9.5"
   },
