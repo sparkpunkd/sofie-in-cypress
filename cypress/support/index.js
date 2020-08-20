@@ -18,3 +18,10 @@ import './commands'
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
+
+// This should prevent cypress from hijacking HTTP requests, which are useless
+// to us, because we don't use a REST API.
+Cypress.Server.defaults({
+	enable: false,
+	ignore: () => true
+})

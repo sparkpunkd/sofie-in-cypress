@@ -1,6 +1,6 @@
 describe('Test rundown', () => {
   beforeEach(() => {
-    cy.visit('/rundown/_YJJzXOzWeHeepFTxTs8GGSk6Xw_?studio=1') 
+    cy.visit(`${Cypress.env('host')}/rundown/${Cypress.env('ro_id')}?studio=1`) 
   })
   const layers: Array<{ name: string, label: string}> = [
     { name: 'graphics_tag_left', label: 'Arkiv' },
@@ -14,27 +14,32 @@ describe('Test rundown', () => {
 
   ]
   const studio = 'studio0'
-  it('has required layers', () => {
-    cy.wait(5000, { timeout: 6000 })
-    cy.scrollTo('bottom', { duration: 10000, timeout: 30000 })
-    cy.scrollTo('top')
-    cy.wrap(layers).each((layer) => {
-      cy.get(`[data-source-id="${studio}_${layer.name}"]`)
-      .should('have.length.gte', 1)
-      .first()
-      .should('be.visible')
-      .should('have.text', layer.label)        
-    })
-  })
+  // it('has required layers', () => {
+  //   cy.wait(5000, { timeout: 6000 })
+  //   cy.scrollTo('bottom', { duration: 10000, timeout: 30000 })
+  //   cy.scrollTo('top')
+  //   cy.wrap(layers).each((layer) => {
+  //     cy.get(`[data-source-id="${studio}_${layer.name}"]`)
+  //     .should('have.length.gte', 1)
+  //     .first()
+  //     .should('be.visible')
+  //     .should('have.text', layer.label)        
+  //   })
+  // })
   it('receives hotkeys', () => {
     cy.waitUntil(() => cy.get('.header.rundown').should('be.visible'), {
       timeout: 10000
     })
-    cy.get('body').type('{ctrl}\\')
+    cy.roActivate()
     cy.wait(3000, { timeout: 4000 })
     cy.get('.header.rundown')
       .should('have.class', 'active')
-    cy.get('body').type('{ctrl}{shift}\\')
+    cy.wait(3000, { timeout: 4000 })
+    cy.roTake()
+    cy.wait(3000, { timeout: 4000 })
+    cy.roHotkey(13, false, false, false, 2) // Numpad enter
+    cy.wait(3000, { timeout: 4000 })
+    cy.roDeactivate()
     cy.wait(3000, { timeout: 4000 })
     cy.get('.header.rundown')
       .should('have.class', 'not-active')
@@ -48,6 +53,5 @@ describe('Test rundown', () => {
     cy.screenshot({
       capture: 'runner'
     })
-    cy.wait(3000, { timeout: 4000 })
   })
 })

@@ -105,6 +105,7 @@ dist
 
 cypress/videos/
 cypress/screenshots/
+cypress/integration/
 src/fakeAtem/dist-win/
 src/fakeAtem/dist-linux/
 mochawesome-report/
