@@ -30,15 +30,46 @@ describe('Test rundown', () => {
     cy.waitUntil(() => cy.get('.header.rundown').should('be.visible'), {
       timeout: 10000
     })
-    cy.roActivate()
     cy.wait(3000, { timeout: 4000 })
+
+    cy.roActivate()
     cy.get('.header.rundown')
       .should('have.class', 'active')
-    cy.wait(3000, { timeout: 4000 })
+    cy.wait(1000, { timeout: 4000 })
+
     cy.roTake()
-    cy.wait(3000, { timeout: 4000 })
+    cy.task('caspar', '202 PLAY OK')
+        .then(result => {
+          cy.log('Received', result)
+          cy.addContext({ title: 'take 1', value: result })
+        })
+    cy.wait(8000, { timeout: 4000 })
+
     cy.roHotkey(13, false, false, false, 2) // Numpad enter
-    cy.wait(3000, { timeout: 4000 })
+    cy.task('caspar', '202 PLAY OK')
+      .then(result => {
+        cy.log('Received', result)
+        cy.addContext({ title: 'numpad enter', value: result })
+      })
+    cy.wait(8000, { timeout: 4000 })
+
+    cy.roTake()
+    cy.task('caspar', '202 PLAY OK')
+      .then(result => {
+        cy.log('Received', result)
+        cy.addContext({ title: 'take 2', value: result })
+      })
+    cy.wait(5000, { timeout: 4000 })
+
+    cy.roHotkey(112) // F1
+    // TODO: wait for atem change command
+    cy.wait(4000, { timeout: 4000 })
+
+    cy.roHotkey(50) // '2'
+    // TODO: wait for atem change command
+    cy.wait(4000, { timeout: 4000 })
+
+
     cy.roDeactivate()
     cy.wait(3000, { timeout: 4000 })
     cy.get('.header.rundown')

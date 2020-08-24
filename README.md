@@ -8,8 +8,12 @@ This work was carried out as part of the development of the [Sofie TV Automation
 To run tests against a specific machine use:
 
 ```
-cypress run --env host=http://sofie,ro_id=G6xVUpdg91LOM2Hx2Dv4NpJFuaw_
+cypress run --env host=http://sofie,ro_id=G6xVUpdg91LOM2Hx2Dv4NpJFuaw -reporter mochawesome
 ```
+
+Set the `host` and `ro_id` (running order ID) properties.
+
+Reports are output to the `mocahawesome_report/` folder, screenshots to `cypres/screenshots/sofie/` and videos to `cypress/videos/sofie/`.
 
 ## Mocks
 
